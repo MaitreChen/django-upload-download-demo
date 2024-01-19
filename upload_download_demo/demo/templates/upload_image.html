@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Download</title>
+</head>
+<body>
+
+<div id="content">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload Image</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Image Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in records %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ record.get_image_name }}</td>
+                <td>
+                    <a href="{% url 'download_image' filename=record.get_image_name %}" download>
+                        Download
+                    </a>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
